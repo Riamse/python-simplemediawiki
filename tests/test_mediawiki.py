@@ -54,12 +54,12 @@ class MediaWikiTest(unittest.TestCase):
         self.assertEquals(namespaces[0], '')
         self.assertEquals(namespaces[1], 'Talk')
 
-    def test_namespaces_nonpsuedo(self):
-        namespaces = self.mw.namespaces(psuedo=False)
+    def test_namespaces_nonpseudo(self):
+        namespaces = self.mw.namespaces(pseudo=False)
         self.assertTrue(-1 not in namespaces)
 
-    def test_namespaces_psuedo(self):
-        namespaces = self.mw.namespaces(psuedo=True)
+    def test_namespaces_pseudo(self):
+        namespaces = self.mw.namespaces(pseudo=True)
         self.assertTrue(-1 in namespaces)
 
     def test_parse_date(self):
