@@ -96,7 +96,7 @@ class MediaWiki(object):
     """
     _high_limits = None
     _namespaces = None
-    _psuedo_namespaces = None
+    _pseudo_namespaces = None
 
     def __init__(self, api_url, cookie_file=None, cookiejar=None,
                  user_agent=DEFAULT_UA, http_user=None, http_password=None):
@@ -287,15 +287,15 @@ class MediaWiki(object):
         else:
             return low
 
-    def namespaces(self, psuedo=True):
+    def namespaces(self, pseudo=True):
         """
         Fetches a list of namespaces for this wiki and returns them as a
         dictionary of namespace IDs corresponding to namespace names. If
-        *psuedo* is ``True``, the dictionary will also list psuedo-namespaces,
+        *pseudo* is ``True``, the dictionary will also list pseudo-namespaces,
         which are the "Special:" and "Media:" namespaces (special because they
         have no content associated with them and their IDs are negative).
 
-        :param psuedo: boolean to determine inclusion of psuedo-namespaces
+        :param pseudo: boolean to determine inclusion of pseudo-namespaces
         :returns: dictionary of namespace IDs and names
         """
         if self._namespaces is None:
@@ -303,18 +303,18 @@ class MediaWiki(object):
                                 'meta': 'siteinfo',
                                 'siprop': 'namespaces'})
             self._namespaces = {}
-            self._psuedo_namespaces = {}
+            self._pseudo_namespaces = {}
             for nsid in result['query']['namespaces']:
                 if int(nsid) >= 0:
                     self._namespaces[int(nsid)] = \
                         result['query']['namespaces'][nsid]['*']
                 else:
-                    self._psuedo_namespaces[int(nsid)] = \
+                    self._pseudo_namespaces[int(nsid)] = \
                         result['query']['namespaces'][nsid]['*']
-        if psuedo:
+        if pseudo:
             retval = {}
             retval.update(self._namespaces)
-            retval.update(self._psuedo_namespaces)
+            retval.update(self._pseudo_namespaces)
             return retval
         else:
             return self._namespaces
